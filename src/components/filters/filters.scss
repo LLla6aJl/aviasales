@@ -1,0 +1,41 @@
+fieldset {
+  border: none;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  padding-block-start: 0;
+  padding-inline-start: 0;
+  padding-inline-end: 0;
+  padding-block-end: 0;
+}
+
+.filters-items {
+  padding: 20px;
+}
+.filter-label {
+  margin-left: 10px;
+}
+
+.filter-title {
+  margin-bottom: 20px;
+  font-size: 12px;
+}
+fieldset div {
+  margin-bottom: 20px;
+  font-size: 13px;
+}
+
+.filters {
+  background-color: #ffffff;
+
+  margin-right: 20px;
+  border-radius: 5px;
+  @media screen and (max-width: 770px) {
+    margin-bottom: 10px;
+    flex-grow: 2;
+  }
+}
+
+.divider {
+  height: 100%;
+  background-color: #e5e5e5;
+}

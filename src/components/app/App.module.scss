@@ -1,0 +1,44 @@
+.wrapper {
+  padding-left: 103px;
+  padding-right: 103px;
+  margin: auto;
+  font-family: "Open Sans";
+  max-width: 1120px;
+  @media screen and (max-width: 770px) {
+    padding-left: 15px;
+    padding-right: 17px;
+  }
+}
+
+.content {
+  display: flex;
+  width: 100%;
+  @media screen and (max-width: 770px) {
+    flex-wrap: wrap;
+  }
+}
+
+.menu {
+  flex-grow: 1;
+  width: 100%;
+  max-width: 600px;
+  @media screen and (max-width: 600px) {
+    min-width: 400px;
+  }
+}
+
+.header::after {
+  content: "";
+  display: block;
+  width: 82px;
+  height: 89px;
+  margin: auto;
+  background-image: url(./Logo.png);
+}
+
+@font-face {
+  font-family: "Open Sans";
+  src: url("./OpenSans-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: normal;
+}
