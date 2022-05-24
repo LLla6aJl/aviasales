@@ -8,30 +8,68 @@ fieldset {
   padding-block-end: 0;
 }
 
-.filters-items {
-  padding: 20px;
+.filters-wrap {
+  @media screen and (max-width: 770px) {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    background-color: #e5e5e5;
+  }
 }
-.filter-label {
-  margin-left: 10px;
+
+.filters-items {
+  padding-bottom: 10px;
+}
+
+.checkbox-wrap {
+  height: 40px;
+  font-size: 13px;
+  padding: 10px 20px 10px 20px;
+}
+
+.checkbox-wrap:hover {
+  background-color: #f1fcff;
+}
+
+.check {
+  padding-left: 25px;
+  display: block;
+}
+
+.check:hover {
+  background-color: #f1fcff;
+}
+
+.checkInput {
+  position: absolute;
+  appearance: none;
+}
+
+.check__box {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-image: url(./checkbox.svg);
+  margin-left: -2em;
+}
+
+.checkInput:checked + .check__box {
+  background-image: url(./checkbox_checked.svg);
 }
 
 .filter-title {
-  margin-bottom: 20px;
+  padding: 20px 10px 0px 20px;
+  font-weight: 600;
   font-size: 12px;
-}
-fieldset div {
-  margin-bottom: 20px;
-  font-size: 13px;
 }
 
 .filters {
   background-color: #ffffff;
-
   margin-right: 20px;
   border-radius: 5px;
   @media screen and (max-width: 770px) {
     margin-bottom: 10px;
-    flex-grow: 2;
+    margin-right: 0px;
   }
 }
 

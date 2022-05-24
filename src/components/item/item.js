@@ -1,19 +1,26 @@
-import "./item.scss";
-import { convertMinsToHrsMins, getTime, prettify } from "../../services/helper";
+import './item.scss';
+import {
+  convertMinsToHrsMins,
+  getTime,
+  prettify,
+  keysSelectedFilter,
+  filterTickets,
+} from '../../services/helper';
 
-import { useSelector } from "react-redux";
+import { useSelector } from 'react-redux';
 
 function Item(tickets) {
   const sort = useSelector((state) => state.sort);
-  const filter = useSelector((state) => state.filters.filtered[0]);
+  const filters = useSelector((state) => state.filters);
+  const ticketsCount = useSelector((state) => state.tickets.ticketsCount);
   let res = [...tickets.tickets];
-  if (sort.sort[0] === "price") {
+  if (sort.sort[0] === 'price') {
     res.sort(function (a, b) {
       return a.price - b.price;
     });
   }
 
-  if (sort.sort[0] === "duration") {
+  if (sort.sort[0] === 'duration') {
     res.sort(function (a, b) {
       return (
         a.segments[0].duration +
@@ -22,47 +29,29 @@ function Item(tickets) {
       );
     });
   }
-  let arr;
-  switch (filter) {
-    case "all":
-      arr = res;
-      break;
-    case "no":
-      arr = [...res].filter((item) => {
-        return (
-          item.segments[0].stops.length === 0 &&
-          item.segments[1].stops.length === 0
-        );
-      });
-      break;
-    case "one":
-      arr = [...res].filter((item) => {
-        return (
-          item.segments[0].stops.length === 1 &&
-          item.segments[1].stops.length === 1
-        );
-      });
-      break;
-    case "two":
-      arr = [...res].filter((item) => {
-        return (
-          item.segments[0].stops.length === 2 &&
-          item.segments[1].stops.length === 2
-        );
-      });
-      break;
-    case "three":
-      arr = [...res].filter((item) => {
-        return (
-          item.segments[0].stops.length === 3 &&
-          item.segments[1].stops.length === 3
-        );
-      });
-      break;
-    default:
-      arr = res;
+
+  if (sort.sort[0] === 'optimal') {
+    res.sort(function (a, b) {
+      return (
+        a.segments[0].duration +
+        a.segments[1].duration -
+        (b.segments[0].duration + b.segments[1].duration)
+      );
+    });
   }
 
+  const selectedFilter = keysSelectedFilter(filters);
+  let result = filterTickets(res, selectedFilter);
+  let arr = result.slice(0, ticketsCount);
+  if (sort.sort[0] === 'optimal') {
+    arr.sort(function (a, b) {
+      return a.price - b.price;
+    });
+  }
+  const noItems =
+    result.length === 0 ? (
+      <span>Рейсов, подходящих под заданные фильтры, не найдено</span>
+    ) : null;
   return (
     <ul className="items">
       {arr.map((item, index) => {
@@ -105,7 +94,7 @@ function Item(tickets) {
                 </span>
                 <span>В ПУТИ</span>
                 <span>
-                  {stops.length ? stops.length : null}{" "}
+                  {stops.length ? stops.length : null}{' '}
                   {stops.length === 1 ? `ПЕРЕСАДКА` : `ПЕРЕСАДКИ`}
                 </span>
               </div>
@@ -114,7 +103,7 @@ function Item(tickets) {
                   {timeStart} - {timeFinish}
                 </span>
                 <span>{durationHours}</span>
-                <span>{stops.length ? stops.join(" ") : `НЕТ`}</span>
+                <span>{stops.length ? stops.join(' ') : `НЕТ`}</span>
               </div>
             </div>
             <div className="flight">
@@ -124,7 +113,7 @@ function Item(tickets) {
                 </span>
                 <span>В ПУТИ</span>
                 <span>
-                  {stopsBack.length ? stopsBack.length : null}{" "}
+                  {stopsBack.length ? stopsBack.length : null}{' '}
                   {stopsBack.length === 1 ? `ПЕРЕСАДКА` : `ПЕРЕСАДКИ`}
                 </span>
               </div>
@@ -133,12 +122,13 @@ function Item(tickets) {
                   {timeStartBack} - {timeFinishBack}
                 </span>
                 <span>{durationHoursBack}</span>
-                <span>{stopsBack.length ? stopsBack.join(" ") : `НЕТ`}</span>
+                <span>{stopsBack.length ? stopsBack.join(' ') : `НЕТ`}</span>
               </div>
             </div>
           </li>
         );
       })}
+      {noItems}
     </ul>
   );
 }

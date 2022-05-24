@@ -1,78 +1,64 @@
-import "./filters.scss";
-import { useDispatch } from "react-redux";
-import { filtered } from "../../services/reducers/filtersReducer";
-function Filters() {
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import './filters.scss';
+
+export const toggleCheckbox = (e) => ({
+  type: 'CHECKED',
+  payload: {
+    id: e.target.id,
+  },
+});
+
+export const toggleCheckAll = (e) => ({
+  type: 'CHECK_ALL',
+  payload: {
+    checked: e.target.checked,
+  },
+});
+
+const FilterBox = () => {
+  const filters = useSelector((state) => state.filters);
   const dispatch = useDispatch();
+  const renderInput = (label, id, isChecked, handler) => {
+    return (
+      <div key={id} className="checkbox-wrap">
+        <label className="check">
+          <input
+            id={id}
+            onChange={(e) => dispatch(handler(e))}
+            checked={isChecked}
+            type="checkbox"
+            className="checkInput"
+          ></input>
+          <span className="check__box"> </span>
+          {label}
+        </label>
+      </div>
+    );
+  };
+
+  const renderElements = () => {
+    return filters.map(({ label, id, isChecked }) =>
+      renderInput(label, id, isChecked, toggleCheckbox)
+    );
+  };
+
+  const areAllChecked = filters.every((item) => item.isChecked);
 
   return (
-    <aside className="filters">
-      <div className="filters-items">
-        <fieldset>
-          <legend className="filter-title">КОЛИЧЕСТВО ПЕРЕСАДОК</legend>
-          <div>
-            <input
-              type="checkbox"
-              id="all"
-              name="all"
-              onClick={() => dispatch(filtered(["all"]))}
-            ></input>
-            <label className="filter-label" htmlFor="all">
-              Все
-            </label>
-          </div>
-          <div>
-            <input
-              type="checkbox"
-              id="no-transfer"
-              name="no-transfer"
-              checked={isChecked}
-              onClick={() => dispatch(noTransfer())}
-            ></input>
-            <label className="filter-label" htmlFor="no-transfer">
-              Без пересадок
-            </label>
-          </div>
-          <div>
-            <input
-              type="checkbox"
-              id="one-transfer"
-              name="one-transfer"
-              checked={isChecked}
-              onClick={() => dispatch(oneTransfer())}
-            ></input>
-            <label className="filter-label" htmlFor="one-transfer">
-              1 пересадка
-            </label>
-          </div>
-          <div>
-            <input
-              type="checkbox"
-              id="two-transfer"
-              name="two-transfer"
-              checked={isChecked}
-              onClick={() => dispatch(filtered(["two"]))}
-            ></input>
-            <label className="filter-label" htmlFor="two-transfer">
-              2 пересадки
-            </label>
-          </div>
-          <div>
-            <input
-              type="checkbox"
-              id="three-transfer"
-              name="three-transfer"
-              checked={isChecked}
-              onClick={() => dispatch(filtered(["three"]))}
-            ></input>
-            <label className="filter-label" htmlFor="three-transfer">
-              3 пересадки
-            </label>
-          </div>
-        </fieldset>
-      </div>
-      <div className="divider" />
-    </aside>
+    <div className="filters-wrap">
+      <aside className="filters">
+        <div className="filters-items">
+          <fieldset>
+            <legend className="filter-title">КОЛИЧЕСТВО ПЕРЕСАДОК</legend>
+            {renderInput('Все', '1', areAllChecked, toggleCheckAll)}
+            {renderElements()}
+          </fieldset>
+        </div>
+        <div className="divider" />
+      </aside>
+    </div>
   );
-}
+};
 
-export default Filters;
+export default FilterBox;

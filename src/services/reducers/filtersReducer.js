@@ -1,30 +1,19 @@
-import { createSlice } from "@reduxjs/toolkit";
-
 const initialState = [
-  { label: "Без пересадок", id: "2", isChecked: false },
-  { label: "1 пересадка", id: "3", isChecked: false },
-  { label: "2 пересадки", id: "4", isChecked: false },
-  { label: "3 пересадки", id: "5", isChecked: false },
+  { label: "Без пересадок", id: "0", isChecked: true },
+  { label: "1 пересадка", id: "1", isChecked: true },
+  { label: "2 пересадки", id: "2", isChecked: true },
+  { label: "3 пересадки", id: "3", isChecked: true },
 ];
 
-const filterSlice = createSlice({
-  name: "filtered",
-  initialState,
-  reducers: {
-    noTransfer(state, action) {
-      !state.filtered[0].isChecked;
-    },
-    oneTransfer(state, action) {
-      state.filtered = action.payload;
-    },
-    twoTransfer(state, action) {
-      state.filtered = action.payload;
-    },
-    threeTransfer(state, action) {
-      state.filtered = action.payload;
-    },
-  },
-});
-
-export const { filtered } = filterSlice.actions;
-export default filterSlice.reducer;
+export const reducer = (state = initialState, { type, payload }) => {
+  switch (type) {
+    case "CHECKED":
+      return state.map((item) =>
+        item.id === payload.id ? { ...item, isChecked: !item.isChecked } : item
+      );
+    case "CHECK_ALL":
+      return state.map((item) => ({ ...item, isChecked: payload.checked }));
+    default:
+      return state;
+  }
+};

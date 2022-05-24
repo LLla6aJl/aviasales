@@ -24,3 +24,23 @@ export function prettify(num) {
   var separator = " ";
   return n.replace(/(\d{1,3}(?=(?:\d\d\d)+(?!\d)))/g, "$1" + separator);
 }
+
+export const keysSelectedFilter = (state) =>
+  state.filter((i) => i.isChecked).map((i) => +i.id);
+
+export const filterTickets = (state, keysSelectedFilter) =>
+  state.filter((i) => {
+    let sum = i.segments[0].stops.length + i.segments[1].stops.length;
+    return keysSelectedFilter.includes(sum);
+  });
+
+export const getCookie = (name) => {
+  let matches = document.cookie.match(
+    new RegExp(
+      "(?:^|; )" +
+        name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") +
+        "=([^;]*)"
+    )
+  );
+  return matches ? decodeURIComponent(matches[1]) : undefined;
+};
