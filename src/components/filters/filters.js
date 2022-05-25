@@ -52,7 +52,7 @@ function FilterBox() {
             <legend className={classes['filter-title']}>
               КОЛИЧЕСТВО ПЕРЕСАДОК
             </legend>
-            {renderInput('Все', '1', areAllChecked, toggleCheckAll)}
+            {renderInput('Все', 'all', areAllChecked, toggleCheckAll)}
             {renderElements()}
           </fieldset>
         </div>
