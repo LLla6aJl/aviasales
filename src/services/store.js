@@ -1,8 +1,8 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore } from '@reduxjs/toolkit';
 
-import ticketsReducer from "./reducers/ticketsReducer";
-import sortReducer from "./reducers/sortReducer";
-import { reducer } from "./reducers/filtersReducer";
+import ticketsReducer from './reducers/ticketsReducer';
+import sortReducer from './reducers/sortReducer';
+import { reducer } from './reducers/filtersReducer';
 
 export default configureStore({
   reducer: {

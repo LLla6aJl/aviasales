@@ -37,6 +37,7 @@
         }
       ],
       "linebreak-style": [0, "unix"],
+      
       "quotes": ["error", "single"],
       "semi": 0,
       "react/react-in-jsx-scope": "off",

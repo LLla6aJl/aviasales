@@ -1,0 +1,20 @@
+.mytabs {
+  display: flex;
+  border-radius: 5px;
+}
+
+.tabs {
+  padding-bottom: 20px;
+}
+button {
+  font-size: 12px;
+  padding: 15px 0px 15px 0px;
+  border: none;
+  border-radius: 5px;
+  flex-grow: 1;
+}
+
+.active {
+  background-color: #2196f3;
+  color: white;
+}

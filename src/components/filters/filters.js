@@ -1,6 +1,8 @@
+/* eslint-disable dot-notation */
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import './filters.scss';
+
+import classes from './filters.module.scss';
 
 export const toggleCheckbox = (e) => ({
   type: 'CHECKED',
@@ -16,49 +18,48 @@ export const toggleCheckAll = (e) => ({
   },
 });
 
-const FilterBox = () => {
+function FilterBox() {
   const filters = useSelector((state) => state.filters);
   const dispatch = useDispatch();
-  const renderInput = (label, id, isChecked, handler) => {
-    return (
-      <div key={id} className="checkbox-wrap">
-        <label className="check">
-          <input
-            id={id}
-            onChange={(e) => dispatch(handler(e))}
-            checked={isChecked}
-            type="checkbox"
-            className="checkInput"
-          ></input>
-          <span className="check__box"> </span>
-          {label}
-        </label>
-      </div>
-    );
-  };
+  const renderInput = (label, id, isChecked, handler) => (
+    <div key={id} className={classes['checkbox-wrap']}>
+      <label className={classes['check']} htmlFor={id}>
+        <input
+          id={id}
+          onChange={(e) => dispatch(handler(e))}
+          checked={isChecked}
+          type="checkbox"
+          className={classes['checkInput']}
+        />
+        <span className={classes['check__box']}> </span>
+        {label}
+      </label>
+    </div>
+  );
 
-  const renderElements = () => {
-    return filters.map(({ label, id, isChecked }) =>
+  const renderElements = () =>
+    filters.map(({ label, id, isChecked }) =>
       renderInput(label, id, isChecked, toggleCheckbox)
     );
-  };
 
   const areAllChecked = filters.every((item) => item.isChecked);
 
   return (
-    <div className="filters-wrap">
-      <aside className="filters">
-        <div className="filters-items">
+    <div className={classes['filters-wrap']}>
+      <aside className={classes['filters']}>
+        <div className={classes['filters-items']}>
           <fieldset>
-            <legend className="filter-title">КОЛИЧЕСТВО ПЕРЕСАДОК</legend>
+            <legend className={classes['filter-title']}>
+              КОЛИЧЕСТВО ПЕРЕСАДОК
+            </legend>
             {renderInput('Все', '1', areAllChecked, toggleCheckAll)}
             {renderElements()}
           </fieldset>
         </div>
-        <div className="divider" />
+        <div className={classes['divider']} />
       </aside>
     </div>
   );
-};
+}
 
 export default FilterBox;
