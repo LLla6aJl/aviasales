@@ -7,8 +7,8 @@ import { LoadingOutlined } from '@ant-design/icons';
 import {
   fetchTickets,
   getFullTickets,
+  getMoreTickets,
 } from '../../services/reducers/ticketsReducer';
-import { getMoreTickets } from '../../services/reducers/ticketsReducer';
 import FilterBox from '../filters/filters';
 import Item from '../item/item';
 import MyTabs from '../mytabs/mytabs';

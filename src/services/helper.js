@@ -35,15 +35,3 @@ export const filterTickets = (state, keysSelectedFilter) =>
     const sum = i.segments[0].stops.length + i.segments[1].stops.length;
     return keysSelectedFilter.includes(sum);
   });
-
-export const getCookie = (name) => {
-  const matches = document.cookie.match(
-    new RegExp(
-      '(?:^|; )' +
-        // eslint-disable-next-line no-useless-escape
-        name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') +
-        '=([^;]*)'
-    )
-  );
-  return matches ? decodeURIComponent(matches[1]) : undefined;
-};
