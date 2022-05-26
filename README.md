@@ -1,1 +1,1 @@
-https://aviasales-5b46s0njd-llla6ajl.vercel.app/
+https://aviasales-54yvj4lmn-llla6ajl.vercel.app/
