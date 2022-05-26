@@ -32,6 +32,6 @@ export const keysSelectedFilter = (state) =>
 // eslint-disable-next-line no-shadow
 export const filterTickets = (state, keysSelectedFilter) =>
   state.filter((i) => {
-    const sum = i.segments[0].stops.length + i.segments[1].stops.length;
+    const sum = i.segments[0].stops.length;
     return keysSelectedFilter.includes(sum);
   });
